@@ -1,11 +1,8 @@
 import styled from '@emotion/styled'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCheckCircle, faTimesCircle } from '@fortawesome/free-solid-svg-icons'
-import { MouseEvent } from 'react'
-
-export interface IStyledCard extends ICard {
-  handleOnClick: ({ event, success }: { event: MouseEvent; success?: boolean }) => void
-}
+import { useAppDispatch, useAppSelector } from '@src/redux/hooks'
+import { flipCard, changeCard, adjustCardsChancesToShow } from '@src/redux/slices/deckSlice'
 
 const Wrapper = styled.div`
   display: flex;
@@ -35,10 +32,29 @@ const IconsWrapper = styled.div`
   margin-top: 4rem;
 `
 
-export function Card({ flipped, back, front, handleOnClick }: IStyledCard): JSX.Element {
+export function Card(): JSX.Element {
+  const deck = useAppSelector((state) => state.deck)
+  const cardIndex = useAppSelector((state) => state.deck.cardIndex)
+  const { flipped, front, back } = deck.cards[cardIndex]
+
+  const dispatch = useAppDispatch()
+
+  const handleFlipCard = () => {
+    dispatch(flipCard(cardIndex))
+  }
+
+  const handleWrongAnswer = () => {
+    dispatch(changeCard())
+  }
+
+  const handleCorrectAnswer = () => {
+    dispatch(adjustCardsChancesToShow(cardIndex))
+    dispatch(changeCard())
+  }
+
   if (!flipped) {
     return (
-      <Wrapper onClick={(event) => handleOnClick({ event })}>
+      <Wrapper onClick={handleFlipCard}>
         <Front>{front}</Front>
       </Wrapper>
     )
@@ -48,16 +64,8 @@ export function Card({ flipped, back, front, handleOnClick }: IStyledCard): JSX.
     <Wrapper>
       <Back>{back}</Back>
       <IconsWrapper>
-        <FontAwesomeIcon
-          icon={faTimesCircle}
-          color="red"
-          onClick={(event) => handleOnClick({ event, success: false })}
-        />
-        <FontAwesomeIcon
-          icon={faCheckCircle}
-          color="green"
-          onClick={(event) => handleOnClick({ event, success: true })}
-        />
+        <FontAwesomeIcon icon={faTimesCircle} color="red" onClick={handleWrongAnswer} />
+        <FontAwesomeIcon icon={faCheckCircle} color="green" onClick={handleCorrectAnswer} />
       </IconsWrapper>
     </Wrapper>
   )

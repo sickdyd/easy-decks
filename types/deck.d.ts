@@ -1,4 +1,8 @@
-type IDeck = ICard[]
+interface IDeck {
+  cardCompletionCorrectGuesses: number
+  cardIndex: number
+  cards: ICard[]
+}
 
 interface ICard {
   id: string | number
