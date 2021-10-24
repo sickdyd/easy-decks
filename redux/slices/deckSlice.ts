@@ -1,54 +1,52 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
+import { dummyDeck } from '@src/decks/dummyDeck'
 import type { RootState } from '@src/redux/store'
 
-const initialState: IDeck = {
-  cardCompletionCorrectGuesses: 10,
-  cardIndex: 0,
-  cards: [
-    {
-      id: 0,
-      front: ['学生'],
-      back: ['がくせい'],
-      flipped: false,
-      chances: 50
-    },
-    {
-      id: 1,
-      front: ['先生'],
-      back: ['せんせい'],
-      flipped: false,
-      chances: 50
-    }
-  ]
-} as IDeck
+const getCardIndexByChance = (state: IDeck) => {
+  let newCardIndex = state.lastCardIndex
 
-const chancesToRemove = (deck: IDeck) => 100 / deck.cards.length / deck.cardCompletionCorrectGuesses
+  while (newCardIndex === state.lastCardIndex && state.cards.length > 1) {
+    const allChances = state.cards.map(({ chances }) => Math.random() * chances)
+    newCardIndex = allChances.reduce(
+      (a, b, i) => (a[0] < b ? [b, i] : a),
+      [Number.MIN_VALUE, -1]
+    )[1]
+  }
+
+  return newCardIndex
+}
 
 export const deckSlice = createSlice({
   name: 'deck',
-  initialState,
+  initialState: dummyDeck,
   reducers: {
-    flipCard: (state, action: PayloadAction<number>) => {
-      state.cards[action.payload].flipped = true
+    initializeDeck: (state, action: PayloadAction<IDeck>) => {
+      state.cards = action.payload.cards
+      state.cardIndex = 0
+      state.deckIsCompleted = false
+      state.completedCards = []
     },
-    adjustCardsChancesToShow: (state, action: PayloadAction<number>) => {
-      const percentageToRemove = chancesToRemove(state)
-      state.cards[action.payload].chances -= percentageToRemove
-      const amountForEachCard = percentageToRemove / (state.cards.length - 1)
-      state.cards.forEach(
-        (card, index) => index !== state.cardIndex && (card.chances += amountForEachCard)
-      )
+    flipCard: (state) => {
+      state.cards[state.cardIndex].flipped = true
     },
-    changeCard: (state) => {
+    guessCard: (state, { payload: success }: PayloadAction<boolean>) => {
+      const percentageToRemove = Math.floor(100 / state.cards.length / 10)
+
+      state.cards[state.cardIndex].chances += success ? -percentageToRemove : percentageToRemove
+      state.cards[state.cardIndex].chances < 1 && (state.cards[state.cardIndex].chances = 1)
       state.cards[state.cardIndex].flipped = false
-      state.cardIndex = state.cardIndex >= state.cards.length - 1 ? 0 : state.cardIndex + 1
+
+      const newCardIndex = getCardIndexByChance(state)
+      state.lastCardIndex = newCardIndex
+      state.cardIndex = newCardIndex
     }
   }
 })
 
-export const { flipCard, adjustCardsChancesToShow, changeCard } = deckSlice.actions
+export const { initializeDeck, flipCard, guessCard } = deckSlice.actions
 
 export const selectDeck = (state: RootState) => state.deck.cards
 export const selectcardIndex = (state: RootState) => state.deck.cardIndex
+export const selectDeckIsComplete = (state: RootState) => state.deck.deckIsCompleted
 
 export default deckSlice.reducer

@@ -19,6 +19,7 @@ WIP
 <b>Built with</b>
 
 - [Next.js](https://nextjs.org/)
+- [Redux](https://react-redux.js.org/)
 
 ## Features
 

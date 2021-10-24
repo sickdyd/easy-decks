@@ -2,7 +2,9 @@ import styled from '@emotion/styled'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCheckCircle, faTimesCircle } from '@fortawesome/free-solid-svg-icons'
 import { useAppDispatch, useAppSelector } from '@src/redux/hooks'
-import { flipCard, changeCard, adjustCardsChancesToShow } from '@src/redux/slices/deckSlice'
+import { flipCard, guessCard, initializeDeck } from '@src/redux/slices/deckSlice'
+import { useEffect } from 'react'
+import { dummyDeck } from '@src/decks/dummyDeck'
 
 const Wrapper = styled.div`
   display: flex;
@@ -33,23 +35,40 @@ const IconsWrapper = styled.div`
 `
 
 export function Card(): JSX.Element {
+  const dispatch = useAppDispatch()
   const deck = useAppSelector((state) => state.deck)
   const cardIndex = useAppSelector((state) => state.deck.cardIndex)
-  const { flipped, front, back } = deck.cards[cardIndex]
+  const deckIsCompleted = useAppSelector((state) => state.deck.deckIsCompleted)
 
-  const dispatch = useAppDispatch()
+  const { flipped, front, back } = deck.cards[cardIndex] || {}
+
+  useEffect(() => {
+    console.table(deck.cards)
+    console.table(deck.completedCards)
+  }, [deck])
 
   const handleFlipCard = () => {
-    dispatch(flipCard(cardIndex))
+    dispatch(flipCard())
   }
 
   const handleWrongAnswer = () => {
-    dispatch(changeCard())
+    dispatch(guessCard(false))
   }
 
   const handleCorrectAnswer = () => {
-    dispatch(adjustCardsChancesToShow(cardIndex))
-    dispatch(changeCard())
+    dispatch(guessCard(true))
+  }
+
+  const handleStartAgain = () => {
+    dispatch(initializeDeck(dummyDeck))
+  }
+
+  if (deckIsCompleted) {
+    return (
+      <Wrapper>
+        You completed the deck! <button onClick={handleStartAgain}>Start again!</button>
+      </Wrapper>
+    )
   }
 
   if (!flipped) {
