@@ -1,34 +1,56 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+## Easy Decks
 
-## Getting Started
+This project aims at helping students memorize "cards" containing a question or information on one side and the answer on another. The application will show less and less frequently cards that are being answered correctly.
 
-First, run the development server:
+## Motivation
 
-```bash
-npm run dev
-# or
+I wanted to build a card system study for Japanese kanji. After briefly exploring the options available I decided to build my custom solution.
+
+## Build status
+
+WIP
+
+## Screenshots
+
+WIP
+
+## Tech/framework used
+
+<b>Built with</b>
+
+- [Next.js](https://nextjs.org/)
+
+## Features
+
+- Import a CSV file containg the front / back of your cards
+- Automatically adjusted display frequency based on correct answers
+
+## Installation
+
+```
+yarn install
 yarn dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+or
 
-You can start editing the page by modifying `pages/index.tsx`. The page auto-updates as you edit the file.
+```
+npm install
+npm dev
+```
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.ts`.
+## Tests
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+WIP
 
-## Learn More
+## How to use?
 
-To learn more about Next.js, take a look at the following resources:
+WIP
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Contribute
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+WIP
 
-## Deploy on Vercel
+## License
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+MIT © [sickdyd](https://sickdyd.github.io)
