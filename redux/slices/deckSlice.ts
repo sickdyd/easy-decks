@@ -34,6 +34,8 @@ export const deckSlice = createSlice({
     initializeDeck: (state, action: PayloadAction<IDeck>) => {
       state.cards = action.payload.cards
       state.cardIndex = 0
+      state.lastCardIndex = 0
+      state.lastCardIndexes.push(0)
       state.deckIsCompleted = false
       state.completedCards = []
     },
