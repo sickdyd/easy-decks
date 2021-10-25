@@ -47,6 +47,10 @@ export function Card(): JSX.Element {
     console.table(deck.completedCards)
   }, [deck])
 
+  useEffect(() => {
+    dispatch(initializeDeck(dummyDeck))
+  }, [])
+
   const handleFlipCard = () => {
     dispatch(flipCard())
   }

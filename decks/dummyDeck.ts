@@ -3,6 +3,7 @@ export const dummyDeck: IDeck = {
   lastCardIndex: 0,
   completedCards: [],
   deckIsCompleted: false,
+  lastCardIndexes: [],
   cards: [
     {
       front: ['1'],
@@ -22,21 +23,21 @@ export const dummyDeck: IDeck = {
       front: ['3'],
       back: ['がくせい'],
       flipped: false,
-      chances: 1,
+      chances: 100,
       correctGuesses: 0
     },
     {
       front: ['4'],
       back: ['せんせい'],
       flipped: false,
-      chances: 48,
+      chances: 100,
       correctGuesses: 0
     },
     {
       front: ['5'],
       back: ['がくせい'],
       flipped: false,
-      chances: 49,
+      chances: 100,
       correctGuesses: 0
     }
   ]

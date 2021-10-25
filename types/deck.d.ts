@@ -4,6 +4,7 @@ interface IDeck {
   cards: ICard[]
   completedCards: ICard[]
   deckIsCompleted: boolean
+  lastCardIndexes: number[]
 }
 
 interface ICard {

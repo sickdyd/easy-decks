@@ -4,13 +4,24 @@ import type { RootState } from '@src/redux/store'
 
 const getCardIndexByChance = (state: IDeck) => {
   let newCardIndex = state.lastCardIndex
+  let cardsNotRecentlyDrawn: number[] = []
 
-  while (newCardIndex === state.lastCardIndex && state.cards.length > 1) {
-    const allChances = state.cards.map(({ chances }) => Math.random() * chances)
-    newCardIndex = allChances.reduce(
-      (a, b, i) => (a[0] < b ? [b, i] : a),
-      [Number.MIN_VALUE, -1]
-    )[1]
+  if (state.lastCardIndexes.length >= state.cards.length * 3) {
+    state.cards.forEach((_, index) => {
+      if (!state.lastCardIndexes.includes(index)) {
+        cardsNotRecentlyDrawn.push(index)
+      }
+    })
+  }
+
+  if (cardsNotRecentlyDrawn.length > 0) {
+    newCardIndex = cardsNotRecentlyDrawn[0]
+  } else {
+    while (newCardIndex === state.lastCardIndex && state.cards.length > 1) {
+      const allChances = state.cards.map(({ chances }) => Math.random() * chances)
+      const maxValue = Math.max(...allChances)
+      newCardIndex = allChances.indexOf(maxValue)
+    }
   }
 
   return newCardIndex
@@ -30,13 +41,13 @@ export const deckSlice = createSlice({
       state.cards[state.cardIndex].flipped = true
     },
     guessCard: (state, { payload: success }: PayloadAction<boolean>) => {
-      const percentageToRemove = Math.floor(100 / state.cards.length / 10)
-
-      state.cards[state.cardIndex].chances += success ? -percentageToRemove : percentageToRemove
-      state.cards[state.cardIndex].chances < 1 && (state.cards[state.cardIndex].chances = 1)
+      state.cards[state.cardIndex].chances += success ? -20 : 0
+      state.cards[state.cardIndex].chances <= 0 && (state.cards[state.cardIndex].chances = 0)
       state.cards[state.cardIndex].flipped = false
 
       const newCardIndex = getCardIndexByChance(state)
+      state.lastCardIndexes.push(newCardIndex)
+      state.lastCardIndexes.length > state.cards.length * 3 && state.lastCardIndexes.shift()
       state.lastCardIndex = newCardIndex
       state.cardIndex = newCardIndex
     }
