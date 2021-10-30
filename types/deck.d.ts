@@ -5,7 +5,6 @@ interface IDeck {
   cardIndex: number
   lastCardIndex: number
   cards: ICard[]
-  completedCards: ICard[]
   deckIsCompleted: boolean
   lastCardIndexes: number[]
 }
@@ -15,5 +14,4 @@ interface ICard {
   back: string[]
   flipped: boolean
   chances: number
-  correctGuesses: number
 }
