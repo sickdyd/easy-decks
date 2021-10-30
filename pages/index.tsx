@@ -1,8 +1,8 @@
 import type { NextPage } from 'next'
 import { DeckList } from '@src/components/decks/DeckList'
-import { dummyDecks } from '@src/decks/dummyDecks'
 import styled from '@emotion/styled'
 import { Container } from '@src/components/shared/Container'
+import { dummyDecks } from '@src/decks/dummyDecks'
 
 export const Wrapper = styled(Container)``
 

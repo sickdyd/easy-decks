@@ -3,9 +3,9 @@ import styled from '@emotion/styled'
 import { Deck } from '@src/components/decks/Deck'
 import { Container } from '@src/components/shared/Container'
 import { NextPage } from 'next'
-import { dummyDecks } from '@src/decks/dummyDecks'
-import { useAppDispatch } from '@src/redux/hooks'
+import { useAppDispatch, useAppSelector } from '@src/redux/hooks'
 import { initializeDeck } from '@src/redux/slices/deckSlice'
+import { dummyDecks } from '@src/decks/dummyDecks'
 
 const Wrapper = styled(Container.withComponent('main'))``
 
@@ -14,14 +14,14 @@ const PlayDeck: NextPage = () => {
   const router = useRouter()
   const { id } = router.query
 
-  const deck = (deckId?: string) => dummyDecks.find((deck) => deck.id === deckId)
+  const deck = dummyDecks.find((deck) => deck.id === id)
 
   // TODO: handle missing deck
   if (!deck) {
     return null
   }
 
-  dispatch(initializeDeck(deck(id as string)!))
+  dispatch(initializeDeck(deck))
 
   return (
     <Wrapper>

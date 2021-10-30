@@ -44,4 +44,4 @@ const dummyDeck: IDeck = {
   ]
 } as IDeck
 
-export const dummyDecks = [dummyDeck, dummyDeck, dummyDeck] as IDeck[]
+export const dummyDecks: IDeck[] = [dummyDeck, dummyDeck]

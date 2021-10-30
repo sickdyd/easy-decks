@@ -1,10 +1,10 @@
 import { createSlice, PayloadAction, current } from '@reduxjs/toolkit'
 import { dummyDecks } from '@src/decks/dummyDecks'
-import type { RootState } from '@src/redux/store'
+import { RootState } from '@src/redux/store'
 
-export const MIN_CORRECT_GUESSES = 5
+export const MIN_CORRECT_GUESSES = 1
 
-const getCardIndexByChance = (state: IDeck) => {
+export const getCardIndexByChance = (state: IDeck) => {
   let newCardIndex = state.lastCardIndex
 
   const uncompletedCards = state.cards.filter(({ chances }) => chances > 0)

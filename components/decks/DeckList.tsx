@@ -14,11 +14,12 @@ const DeckCover = styled.a`
   align-items: center;
   height: 150px;
   width: 100px;
-  background-color: var(--amber);
+  background-color: var(--white);
   color: var(--paradise-pink);
   font-size: 1.5rem;
   padding: 1rem;
   border-radius: 10px;
+  border: 4px dashed var(--paradise-pink);
 `
 
 export function DeckList({ decks }: { decks: IDeck[] }) {

@@ -1,3 +1,5 @@
+type IDecks = IDeck[]
+
 interface IDeck {
   id: string
   cardIndex: number

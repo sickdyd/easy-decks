@@ -90,11 +90,16 @@ export function Deck(): JSX.Element {
 
   return (
     <Wrapper>
-      <CardContainer>{back}</CardContainer>
-      <IconsWrapper>
-        <FontAwesomeIcon icon={faTimesCircle} color="red" onClick={handleWrongAnswer} />
-        <FontAwesomeIcon icon={faCheckCircle} color="green" onClick={handleCorrectAnswer} />
-      </IconsWrapper>
+      <Front onClick={handleFlipCard}>{front}</Front>
+      {flipped && (
+        <>
+          <CardContainer>{back}</CardContainer>
+          <IconsWrapper>
+            <FontAwesomeIcon icon={faTimesCircle} color="red" onClick={handleWrongAnswer} />
+            <FontAwesomeIcon icon={faCheckCircle} color="green" onClick={handleCorrectAnswer} />
+          </IconsWrapper>
+        </>
+      )}
     </Wrapper>
   )
 }
