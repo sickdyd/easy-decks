@@ -1,4 +1,5 @@
-export const dummyDeck: IDeck = {
+const dummyDeck: IDeck = {
+  id: 'a',
   cardIndex: 0,
   lastCardIndex: 0,
   completedCards: [],
@@ -6,39 +7,41 @@ export const dummyDeck: IDeck = {
   lastCardIndexes: [],
   cards: [
     {
-      front: ['1'],
-      back: ['がくせい'],
+      front: ['人口'],
+      back: ['じんこう'],
       flipped: false,
       chances: 5,
       correctGuesses: 0
     },
     {
-      front: ['2'],
-      back: ['せんせい'],
+      front: ['暑い'],
+      back: ['あつい'],
       flipped: false,
       chances: 5,
       correctGuesses: 0
     },
     {
-      front: ['3'],
-      back: ['がくせい'],
+      front: ['黒い'],
+      back: ['くろい'],
       flipped: false,
       chances: 5,
       correctGuesses: 0
     },
     {
-      front: ['4'],
-      back: ['せんせい'],
+      front: ['書く'],
+      back: ['かく'],
       flipped: false,
       chances: 5,
       correctGuesses: 0
     },
     {
-      front: ['5'],
-      back: ['がくせい'],
+      front: ['乾く'],
+      back: ['かわく'],
       flipped: false,
       chances: 5,
       correctGuesses: 0
     }
   ]
 } as IDeck
+
+export const dummyDecks = [dummyDeck, dummyDeck, dummyDeck] as IDeck[]

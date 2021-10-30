@@ -1,7 +1,11 @@
 import type { NextPage } from 'next'
 import Head from 'next/head'
-import { Card } from '@src/components/card/Card'
-import { Wrapper } from '@src/components/pages/index/IndexStyles'
+import { DeckList } from '@src/components/decks/DeckList'
+import { dummyDecks } from '@src/decks/dummyDecks'
+import styled from '@emotion/styled'
+import { Container } from '@src/components/shared/Container'
+
+export const Wrapper = styled(Container)``
 
 const Home: NextPage = () => {
   return (
@@ -12,9 +16,7 @@ const Home: NextPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <main>
-        <Card />
-      </main>
+      <DeckList decks={dummyDecks} />
 
       <footer></footer>
     </Wrapper>

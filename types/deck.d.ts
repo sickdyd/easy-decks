@@ -1,4 +1,5 @@
 interface IDeck {
+  id: string
   cardIndex: number
   lastCardIndex: number
   cards: ICard[]

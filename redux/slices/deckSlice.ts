@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction, current } from '@reduxjs/toolkit'
-import { dummyDeck } from '@src/decks/dummyDeck'
+import { dummyDecks } from '@src/decks/dummyDecks'
 import type { RootState } from '@src/redux/store'
 
 export const MIN_CORRECT_GUESSES = 5
@@ -29,13 +29,14 @@ const deckIsCompleted = (state: IDeck) =>
 
 export const deckSlice = createSlice({
   name: 'deck',
-  initialState: dummyDeck,
+  initialState: dummyDecks[0],
   reducers: {
     initializeDeck: (state, action: PayloadAction<IDeck>) => {
       state.cards = action.payload.cards
       state.cards = state.cards.map((card) => ({ ...card, chanches: MIN_CORRECT_GUESSES }))
-      state.cardIndex = 0
-      state.lastCardIndex = 0
+      const initialCard = getCardIndexByChance(state)
+      state.cardIndex = initialCard
+      state.lastCardIndex = initialCard
       state.lastCardIndexes = []
       state.deckIsCompleted = false
     },

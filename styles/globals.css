@@ -1,9 +1,20 @@
+/* https://coolors.co/ffbf00-e83f6f-2274a5-32936f-ffffff */
+
+:root {
+  --amber: #ffbf00ff;
+  --paradise-pink: #e83f6fff;
+  --star-command-blue: #2274a5ff;
+  --illuminating-emerald: #32936fff;
+  --white: #ffffffff;
+}
+
 html,
 body {
   padding: 0;
   margin: 0;
-  font-family: 'M PLUS Rounded 1c', -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
-    Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+  font-family: Montserrat, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen, Ubuntu,
+    Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+  background-color: var(--illuminating-emerald);
 }
 
 a {

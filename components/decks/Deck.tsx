@@ -3,10 +3,48 @@ import { faCheckCircle, faTimesCircle } from '@fortawesome/free-solid-svg-icons'
 import { useAppDispatch, useAppSelector } from '@src/redux/hooks'
 import { flipCard, guessCard, initializeDeck } from '@src/redux/slices/deckSlice'
 import { useEffect } from 'react'
-import { dummyDeck } from '@src/decks/dummyDeck'
-import { CardContainer, IconsWrapper, Wrapper } from './CardStyles'
+import styled from '@emotion/styled'
 
-export function Card(): JSX.Element {
+const Wrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  border-radius: 10px;
+  color: var(--paradise-pink);
+  background-color: var(--white);
+  border: 10px solid;
+  padding: 2rem;
+
+  &:hover {
+    cursor: pointer;
+  }
+`
+
+const CardContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  font-size: calc(10vw + 1rem);
+  font-family: 'M PLUS Rounded 1c';
+`
+
+const Front = styled(CardContainer)`
+  font-size: calc(10vw + 5rem);
+`
+
+const IconsWrapper = styled.div`
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  font-size: 4rem;
+  margin-top: 2rem;
+`
+
+export function Deck(): JSX.Element {
   const dispatch = useAppDispatch()
   const deck = useAppSelector((state) => state.deck)
   const cardIndex = useAppSelector((state) => state.deck.cardIndex)
@@ -15,7 +53,7 @@ export function Card(): JSX.Element {
   const { flipped, front, back } = deck.cards[cardIndex] || {}
 
   useEffect(() => {
-    dispatch(initializeDeck(dummyDeck))
+    handleStartAgain()
   }, [])
 
   const handleFlipCard = () => {
@@ -31,7 +69,7 @@ export function Card(): JSX.Element {
   }
 
   const handleStartAgain = () => {
-    dispatch(initializeDeck(dummyDeck))
+    dispatch(initializeDeck(deck))
   }
 
   if (deckIsCompleted) {
@@ -45,7 +83,7 @@ export function Card(): JSX.Element {
   if (!flipped) {
     return (
       <Wrapper onClick={handleFlipCard}>
-        <CardContainer>{front}</CardContainer>
+        <Front>{front}</Front>
       </Wrapper>
     )
   }
