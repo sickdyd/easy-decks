@@ -1,23 +1,23 @@
 import type { NextPage } from 'next'
 import Head from 'next/head'
-import styles from '@src/styles/Home.module.css'
-import { Card } from '@src/components/Card'
+import { Card } from '@src/components/card/Card'
+import { Wrapper } from '@src/components/pages/index/IndexStyles'
 
 const Home: NextPage = () => {
   return (
-    <div className={styles.container}>
+    <Wrapper>
       <Head>
         <title>Easy Decks</title>
         <meta name="description" content="Easily practice your decks!" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <main className={styles.main}>
+      <main>
         <Card />
       </main>
 
-      <footer className={styles.footer}></footer>
-    </div>
+      <footer></footer>
+    </Wrapper>
   )
 }
 
