@@ -3,7 +3,7 @@ import styled from '@emotion/styled'
 import { Deck } from '@src/components/decks/Deck'
 import { Container } from '@src/components/shared/Container'
 import { NextPage } from 'next'
-import { useAppDispatch, useAppSelector } from '@src/redux/hooks'
+import { useAppDispatch } from '@src/redux/hooks'
 import { initializeDeck } from '@src/redux/slices/deckSlice'
 import { dummyDecks } from '@src/decks/dummyDecks'
 
