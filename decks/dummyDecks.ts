@@ -1,5 +1,6 @@
 const dummyDeck: IDeck = {
-  id: 'a',
+  id: 0,
+  name: 'Dummy Deck',
   cardIndex: 0,
   lastCardIndex: 0,
   deckIsCompleted: false,

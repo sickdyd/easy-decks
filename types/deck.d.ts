@@ -1,7 +1,8 @@
 type IDecks = IDeck[]
 
 interface IDeck {
-  id: string
+  id: number
+  name: string
   cardIndex: number
   lastCardIndex: number
   cards: ICard[]
