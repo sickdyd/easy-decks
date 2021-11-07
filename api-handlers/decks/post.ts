@@ -1,16 +1,6 @@
-import { PrismaClient } from '.prisma/client'
 import { DeckWithCards } from '@src/types/deck'
-import { NextApiRequest, NextApiResponse } from 'next'
 
-export async function decksPostHandler({
-  req,
-  res,
-  prisma
-}: {
-  req: NextApiRequest
-  res: NextApiResponse<DeckWithCards[] | string>
-  prisma: PrismaClient
-}) {
+export async function decksPostHandler({ req, res, prisma }: RequestHandler) {
   const { name, cards } = JSON.parse(req.body) as DeckWithCards
 
   const deck = await prisma.deck.create({

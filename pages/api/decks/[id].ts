@@ -11,7 +11,7 @@ export default async function handler(
   const deckId = parseInt(req.query.id as string)
 
   if (req.method === 'GET') {
-    await deckGetHandler({ req, res, prisma, deckId })
+    await deckGetHandler({ req, res, prisma, id: deckId })
   } else if (req.method === 'POST') {
     res.status(200).send('WIP')
   } else {
