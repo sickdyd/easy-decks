@@ -1,5 +1,7 @@
-import prisma from '@src/prisma/prismaClient'
+import { PrismaClient } from '.prisma/client'
 import faker from 'faker'
+
+const prisma = new PrismaClient()
 
 async function main() {
   if (process.env.NODE_ENV === 'production') {
