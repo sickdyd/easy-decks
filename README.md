@@ -20,6 +20,9 @@ WIP
 
 - [Next.js](https://nextjs.org/)
 - [Redux](https://react-redux.js.org/)
+- [Prisma](https://www.prisma.io/)
+- [PostgreSQL](https://www.postgresql.org/)
+- [faker](https://github.com/Marak/Faker.js#readme)
 
 ## Features
 
@@ -38,6 +41,14 @@ or
 ```
 npm install
 npm dev
+```
+
+## DB initialization and seed
+
+Needs [PostgreSQL](https://www.postgresql.org/) installed.
+
+```
+npx prisma migrate dev --name init
 ```
 
 ## Tests

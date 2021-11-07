@@ -1,10 +1,10 @@
-import { createSlice, PayloadAction, current } from '@reduxjs/toolkit'
-import { dummyDecks } from '@src/decks/dummyDecks'
+import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { RootState } from '@src/redux/store'
+import { DeckWithCards } from '@src/types/deck'
 
 export const MIN_CORRECT_GUESSES = 1
 
-export const getCardIndexByChance = (state: IDeck) => {
+export const getCardIndexByChance = (state: DeckWithCards) => {
   let newCardIndex = state.lastCardIndex
 
   const uncompletedCards = state.cards.filter(({ chances }) => chances > 0)
@@ -24,14 +24,14 @@ export const getCardIndexByChance = (state: IDeck) => {
   return newCardIndex
 }
 
-const deckIsCompleted = (state: IDeck) =>
+const deckIsCompleted = (state: DeckWithCards) =>
   !(state.cards.filter(({ chances }) => chances > 0).length > 0)
 
 export const deckSlice = createSlice({
   name: 'deck',
-  initialState: dummyDecks[0],
+  initialState: {} as DeckWithCards,
   reducers: {
-    initializeDeck: (state, action: PayloadAction<IDeck>) => {
+    initializeDeck: (state: DeckWithCards, action: PayloadAction<DeckWithCards>) => {
       state.cards = action.payload.cards
       state.cards = state.cards.map((card) => ({ ...card, chanches: MIN_CORRECT_GUESSES }))
       const initialCard = getCardIndexByChance(state)
@@ -40,10 +40,10 @@ export const deckSlice = createSlice({
       state.lastCardIndexes = []
       state.deckIsCompleted = false
     },
-    flipCard: (state) => {
+    flipCard: (state: DeckWithCards) => {
       state.cards[state.cardIndex].flipped = true
     },
-    guessCard: (state, { payload: success }: PayloadAction<boolean>) => {
+    guessCard: (state: DeckWithCards, { payload: success }: PayloadAction<boolean>) => {
       state.cards[state.cardIndex].chances += success ? -1 : 0
       state.cards[state.cardIndex].flipped = false
       state.deckIsCompleted = deckIsCompleted(state)

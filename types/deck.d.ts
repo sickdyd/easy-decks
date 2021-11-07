@@ -1,18 +1,7 @@
-type IDecks = IDeck[]
+import { Prisma } from '@prisma/client'
 
-interface IDeck {
-  id: number
-  name: string
-  cardIndex: number
-  lastCardIndex: number
-  cards: ICard[]
-  deckIsCompleted: boolean
-  lastCardIndexes: number[]
-}
+const deckWithCards = Prisma.validator<Prisma.DeckArgs>()({
+  include: { cards: true }
+})
 
-interface ICard {
-  front: string[]
-  back: string[]
-  flipped: boolean
-  chances: number
-}
+type DeckWithCards = Prisma.DeckGetPayload<typeof deckWithCards>

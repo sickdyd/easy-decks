@@ -1,4 +1,5 @@
 import styled from '@emotion/styled'
+import { DeckWithCards } from '@src/types/deck'
 import Link from 'next/link'
 
 const Wrapper = styled.div`
@@ -22,7 +23,7 @@ const DeckCover = styled.a`
   border: 4px dashed var(--paradise-pink);
 `
 
-export function DeckList({ decks }: { decks: IDeck[] }) {
+export function DeckList({ decks }: { decks: DeckWithCards[] }) {
   return (
     <Wrapper>
       {decks.map((deck, index) => (

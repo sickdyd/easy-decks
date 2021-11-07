@@ -1,8 +1,7 @@
-import type { NextPage } from 'next'
 import styled from '@emotion/styled'
 import { Container } from '@src/components/shared/Container'
-import { ChangeEvent, useEffect, useState } from 'react'
-import { dummyDecks } from '@src/decks/dummyDecks'
+import type { NextPage } from 'next'
+import { ChangeEvent, useState } from 'react'
 
 export const Wrapper = styled(Container)``
 
@@ -20,26 +19,9 @@ const parseCSV = (csv?: string) => {
 const AddDeck: NextPage = () => {
   const [headers, setHeaders] = useState<string[] | undefined>([])
   const [data, setData] = useState<string[] | undefined>([])
-  const [decks, setDecks] = useState<IDecks[] | undefined>()
-
-  useEffect(() => {
-    const getDecks = () => {
-      fetch('/api/decks')
-        .then(async (response) => await response.json())
-        .then((data) => {
-          setDecks(data)
-          console.log(data)
-        })
-    }
-
-    getDecks()
-  }, [])
 
   const saveDeck = async () => {
-    fetch('/api/decks', {
-      method: 'POST',
-      body: JSON.stringify(dummyDecks[0])
-    }).then((response) => console.log(response.status))
+    // TODO: handle post request
   }
 
   const onFileChange = (event: ChangeEvent) => {
@@ -61,7 +43,7 @@ const AddDeck: NextPage = () => {
   return (
     <Wrapper>
       <input type="file" accept=".csv" onChange={onFileChange} />
-      <button onClick={saveDeck}>Save dummy deck</button>
+      <button onClick={saveDeck}>Save Deck</button>
     </Wrapper>
   )
 }

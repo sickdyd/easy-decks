@@ -1,27 +1,32 @@
-import { useRouter } from 'next/router'
 import styled from '@emotion/styled'
 import { Deck } from '@src/components/decks/Deck'
 import { Container } from '@src/components/shared/Container'
+import { useAppDispatch, useAppSelector } from '@src/redux/hooks'
+import { initializeDeck, selectDeck } from '@src/redux/slices/deckSlice'
 import { NextPage } from 'next'
-import { useAppDispatch } from '@src/redux/hooks'
-import { initializeDeck } from '@src/redux/slices/deckSlice'
-import { dummyDecks } from '@src/decks/dummyDecks'
+import { useRouter } from 'next/router'
+import { useEffect } from 'react'
 
 const Wrapper = styled(Container.withComponent('main'))``
 
 const PlayDeck: NextPage = () => {
+  const deck = useAppSelector(selectDeck)
   const dispatch = useAppDispatch()
   const router = useRouter()
-  const { id } = router.query
+  const deckId = router.query.id
 
-  const deck = dummyDecks.find((deck) => deck.id === id)
+  useEffect(() => {
+    deckId &&
+      fetch(`/api/decks/${deckId}`).then(async (response) => {
+        const deck = JSON.parse(await response.text())
 
-  // TODO: handle missing deck
+        dispatch(initializeDeck(deck))
+      })
+  }, [deckId])
+
   if (!deck) {
     return null
   }
-
-  dispatch(initializeDeck(deck))
 
   return (
     <Wrapper>
