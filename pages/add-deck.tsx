@@ -1,30 +1,27 @@
 import styled from '@emotion/styled'
+import { Button } from '@src/components/shared/Button'
 import { Container } from '@src/components/shared/Container'
+import { useFileInput } from '@src/hooks/useFileInput'
 import type { NextPage } from 'next'
 import { ChangeEvent, useState } from 'react'
 
 export const Wrapper = styled(Container)``
 
-const parseCSV = (csv?: string) => {
-  const rows = csv?.split('\n')
-  const headers = rows?.[0].split(',')
-  const data = rows?.slice(1, rows.length - 1)
+const ContentPreview = styled.pre``
 
-  return {
-    headers,
-    data
-  }
-}
+const Row = styled.div``
+
+const UploadButton = styled(Button)``
 
 const AddDeck: NextPage = () => {
-  const [headers, setHeaders] = useState<string[] | undefined>([])
-  const [data, setData] = useState<string[] | undefined>([])
+  const [data, setData] = useState<string[] | undefined>()
+  const { FileInput } = useFileInput({ onFileChange, accept: 'csv' })
 
   const saveDeck = async () => {
     // TODO: handle post request
   }
 
-  const onFileChange = (event: ChangeEvent) => {
+  function onFileChange(event: ChangeEvent) {
     const target = event.target as HTMLInputElement
     const files = target.files as FileList
     const reader = new FileReader()
@@ -33,17 +30,21 @@ const AddDeck: NextPage = () => {
 
     reader.onload = ({ target }) => {
       const csv = target?.result as string
-      const { headers, data } = parseCSV(csv)
+      const rows = csv?.split('\n')
 
-      setHeaders(headers)
-      setData(data)
+      setData(rows)
     }
   }
 
   return (
     <Wrapper>
-      <input type="file" accept=".csv" onChange={onFileChange} />
-      <button onClick={saveDeck}>Save Deck</button>
+      <FileInput />
+      <ContentPreview>
+        {data?.map((row) => (
+          <Row key={row}>{row}</Row>
+        ))}
+      </ContentPreview>
+      {data && <UploadButton>Upload Deck!</UploadButton>}
     </Wrapper>
   )
 }
