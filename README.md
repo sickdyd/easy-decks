@@ -2,6 +2,8 @@
 
 This project aims at helping students memorize "cards" containing a question or information on one side and the answer on another. The application will show less and less frequently cards that are being answered correctly.
 
+I didn't think through about the name, so I'll leave it like this for the joy of Kiwis.
+
 ## Motivation
 
 I wanted to build a card system study for Japanese kanji. After briefly exploring the options available I decided to build my custom solution.
