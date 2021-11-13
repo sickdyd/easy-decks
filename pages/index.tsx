@@ -1,34 +1,29 @@
+import { Deck } from '.prisma/client'
 import styled from '@emotion/styled'
 import { DeckList } from '@src/components/decks/DeckList'
 import { Container } from '@src/components/shared/Container'
-import { DeckWithCards } from '@src/types/deck'
-import type { NextPage } from 'next'
-import { useEffect, useState } from 'react'
+import prisma from '@src/prisma/prismaClient'
+import type { GetStaticProps, InferGetStaticPropsType } from 'next'
 
 export const Wrapper = styled(Container.withComponent('main'))``
 
-const Home: NextPage = () => {
-  const [decks, setDecks] = useState<DeckWithCards[]>()
-
-  useEffect(() => {
-    fetch('/api/decks').then(async (response) => {
-      if (response.status === 200) {
-        const decks = JSON.parse(await response.text()) as DeckWithCards[]
-
-        setDecks(decks)
-      }
-    })
-  }, [])
-
-  if (!decks) {
-    return null
-  }
-
+const Home = ({ decks }: InferGetStaticPropsType<typeof getStaticProps>) => {
   return (
     <Wrapper>
       <DeckList decks={decks} />
     </Wrapper>
   )
+}
+
+export const getStaticProps: GetStaticProps<{ decks: Deck[] }> = async () => {
+  const decks = await prisma.deck.findMany()
+
+  return {
+    props: {
+      decks
+    },
+    revalidate: 60
+  }
 }
 
 export default Home

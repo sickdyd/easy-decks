@@ -1,38 +1,46 @@
 import styled from '@emotion/styled'
 import { Deck } from '@src/components/decks/Deck'
+import { NotFound } from '@src/components/NotFound'
 import { Container } from '@src/components/shared/Container'
-import { useAppDispatch, useAppSelector } from '@src/redux/hooks'
-import { initializeDeck, selectDeck } from '@src/redux/slices/deckSlice'
-import { NextPage } from 'next'
-import { useRouter } from 'next/router'
-import { useEffect } from 'react'
+import prisma from '@src/prisma/prismaClient'
+import { useAppDispatch } from '@src/redux/hooks'
+import { initializeDeck } from '@src/redux/slices/deckSlice'
+import InferNextPropsType from 'infer-next-props-type'
+import { GetServerSidePropsContext } from 'next'
 
 const Wrapper = styled(Container.withComponent('main'))``
 
-const PlayDeck: NextPage = () => {
-  const deck = useAppSelector(selectDeck)
+const PlayDeck = ({ deck }: InferNextPropsType<typeof getServerSideProps>) => {
   const dispatch = useAppDispatch()
-  const router = useRouter()
-  const deckId = router.query.id
-
-  useEffect(() => {
-    deckId &&
-      fetch(`/api/decks/${deckId}`).then(async (response) => {
-        const deck = JSON.parse(await response.text())
-
-        dispatch(initializeDeck(deck))
-      })
-  }, [deckId])
 
   if (!deck) {
-    return null
+    return (
+      <NotFound
+        message="The deck you are looking for was not found..."
+        buttonLabel="Back to Decks list"
+        buttonUrl="/"
+      />
+    )
   }
+
+  dispatch(initializeDeck(deck))
 
   return (
     <Wrapper>
       <Deck />
     </Wrapper>
   )
+}
+
+export const getServerSideProps = async (context: GetServerSidePropsContext) => {
+  const id = parseInt(context?.params?.id as string)
+  const deck = await prisma.deck.findUnique({ where: { id }, include: { cards: true } })
+
+  return {
+    props: {
+      deck
+    }
+  }
 }
 
 export default PlayDeck

@@ -20,10 +20,15 @@
     "@fortawesome/react-fontawesome": "^0.1.16",
     "@prisma/client": "^3.4.1",
     "@reduxjs/toolkit": "^1.6.2",
+    "axios": "^0.24.0",
+    "babel-plugin-superjson-next": "^0.4.2",
+    "infer-next-props-type": "^0.0.4",
     "next": "11.1.2",
     "react": "17.0.2",
     "react-dom": "17.0.2",
-    "react-redux": "^7.2.5"
+    "react-redux": "^7.2.5",
+    "superjson": "^1.8.0",
+    "swr": "^1.0.1"
   },
   "devDependencies": {
     "@types/faker": "^5.5.9",

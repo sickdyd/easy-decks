@@ -1,5 +1,5 @@
+import { Deck } from '.prisma/client'
 import styled from '@emotion/styled'
-import { DeckWithCards } from '@src/types/deck'
 import Link from 'next/link'
 
 const Wrapper = styled.div`
@@ -17,18 +17,19 @@ const DeckCover = styled.a`
   width: 100px;
   background-color: var(--white);
   color: var(--paradise-pink);
-  font-size: 1.5rem;
+  font-size: 0.85rem;
   padding: 1rem;
   border-radius: 10px;
   border: 4px dashed var(--paradise-pink);
+  text-align: center;
 `
 
-export function DeckList({ decks }: { decks: DeckWithCards[] }) {
+export function DeckList({ decks }: { decks: Deck[] }) {
   return (
     <Wrapper>
       {decks.map((deck, index) => (
         <Link key={index} href={`/play-deck/${deck.id}`} passHref>
-          <DeckCover>deck</DeckCover>
+          <DeckCover>{deck.name}</DeckCover>
         </Link>
       ))}
     </Wrapper>

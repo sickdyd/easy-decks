@@ -2,7 +2,8 @@ import { configureStore } from '@reduxjs/toolkit'
 import deckReducer from '@src/redux/slices/deckSlice'
 
 export const store = configureStore({
-  reducer: { deck: deckReducer }
+  reducer: { deck: deckReducer },
+  middleware: (getDefaultMiddleware) => getDefaultMiddleware({ serializableCheck: false })
 })
 
 // Infer the `RootState` and `AppDispatch` types from the store itself
