@@ -1,7 +1,7 @@
 import { DeckWithCards } from '@src/types/deck'
 
 export async function decksPostHandler({ req, res, prisma }: RequestHandler) {
-  const { name, cards } = JSON.parse(req.body) as DeckWithCards
+  const { name, cards } = req.body as DeckWithCards
 
   const deck = await prisma.deck.create({
     data: {
@@ -14,5 +14,5 @@ export async function decksPostHandler({ req, res, prisma }: RequestHandler) {
     }
   })
 
-  res.status(200).send(JSON.stringify(deck))
+  res.status(200).send(deck)
 }

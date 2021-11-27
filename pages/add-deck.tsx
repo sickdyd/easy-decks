@@ -4,6 +4,7 @@ import { Container } from '@src/components/shared/Container'
 import { Paragraph } from '@src/components/shared/Paragraph'
 import { TextInput } from '@src/components/shared/TextInput'
 import { useFileInput } from '@src/hooks/useFileInput'
+import axios from '@src/requests/axiosInterceptors'
 import type { NextPage } from 'next'
 import { ChangeEvent, useState } from 'react'
 
@@ -25,13 +26,41 @@ const StyledTextInput = styled(TextInput)`
 
 const Row = styled.div``
 
+const buildCardBack = ({ headers, columns }: { headers: string[]; columns: string[] }) => {
+  const cardHeaders = headers.slice(1, headers.length)
+  const cardColumns = columns.slice(1, columns.length)
+
+  return cardHeaders.map((header, index) => `${header}: ${cardColumns[index]}`)
+}
+
+const buildCards = ({ data }: { data: string[] }) => {
+  const headers = data[0].split(',')
+  const cardRows = data.slice(1, data.length)
+
+  const cards = cardRows.map((row) => {
+    const columns = row.split(',')
+    return {
+      front: [columns[0]],
+      back: buildCardBack({ headers, columns }),
+      flipped: false,
+      chances: 100
+    }
+  })
+
+  return cards
+}
+
 const AddDeck: NextPage = () => {
   const [data, setData] = useState<string[] | undefined>()
   const [deckName, setDeckName] = useState<string>()
   const { FileInput } = useFileInput({ onFileChange, accept: 'csv' })
 
   const uploadDeck = async () => {
-    // TODO: handle post request
+    data &&
+      axios
+        .post('/api/decks', { name: deckName, cards: buildCards({ data }) })
+        .then((response) => console.log(response))
+        .catch((error) => console.log(error))
   }
 
   function onFileChange(event: ChangeEvent) {
@@ -43,7 +72,7 @@ const AddDeck: NextPage = () => {
 
     reader.onload = ({ target }) => {
       const csv = target?.result as string
-      const rows = csv?.split('\n')
+      const rows = csv?.split('\r\n')
 
       setData(rows)
     }
