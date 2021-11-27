@@ -30,6 +30,6 @@ model Card {
   back String[]
   flipped Boolean
   chances Int
-  deck Deck @relation(fields: [deckId], references: [id])
+  deck Deck @relation(fields: [deckId], references: [id], onDelete: Cascade)
   deckId Int
 }

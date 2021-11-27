@@ -11,6 +11,9 @@ const Home = ({ decks }: InferGetStaticPropsType<typeof getStaticProps>) => {
   return (
     <Wrapper>
       <DeckList decks={decks} />
+      <a href="https://www.freepik.com/vectors/travel">
+        Travel vector created by macrovector - www.freepik.com
+      </a>
     </Wrapper>
   )
 }

@@ -1,9 +1,9 @@
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import styled from '@emotion/styled'
 import { faCheckCircle, faTimesCircle } from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { useAppDispatch, useAppSelector } from '@src/redux/hooks'
 import { flipCard, guessCard, initializeDeck } from '@src/redux/slices/deckSlice'
 import { useEffect } from 'react'
-import styled from '@emotion/styled'
 
 const Wrapper = styled.div`
   display: flex;
@@ -13,10 +13,6 @@ const Wrapper = styled.div`
   width: 100%;
   height: 100%;
   border-radius: 10px;
-  color: var(--paradise-pink);
-  background-color: var(--white);
-  border: 10px solid;
-  padding: 2rem;
 
   &:hover {
     cursor: pointer;
@@ -25,15 +21,16 @@ const Wrapper = styled.div`
 
 const CardContainer = styled.div`
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
   text-align: center;
-  font-size: calc(10vw + 1rem);
+  font-size: 18px;
   font-family: 'M PLUS Rounded 1c';
 `
 
 const Front = styled(CardContainer)`
-  font-size: calc(10vw + 5rem);
+  font-size: 5rem;
 `
 
 const IconsWrapper = styled.div`
@@ -93,7 +90,11 @@ export function Deck(): JSX.Element {
       <Front onClick={handleFlipCard}>{front}</Front>
       {flipped && (
         <>
-          <CardContainer>{back}</CardContainer>
+          <CardContainer>
+            {back.map((element) => (
+              <p>{element}</p>
+            ))}
+          </CardContainer>
           <IconsWrapper>
             <FontAwesomeIcon icon={faTimesCircle} color="red" onClick={handleWrongAnswer} />
             <FontAwesomeIcon icon={faCheckCircle} color="green" onClick={handleCorrectAnswer} />

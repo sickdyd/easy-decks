@@ -8,12 +8,14 @@ import axios from '@src/requests/axiosInterceptors'
 import type { NextPage } from 'next'
 import { ChangeEvent, useState } from 'react'
 
-export const Wrapper = styled(Container)`
+const Wrapper = styled(Container)`
   padding-top: 2rem;
 `
 
 const ContentPreview = styled.pre`
   margin-top: 1rem;
+  overflow: hidden;
+  max-width: 90vw;
 `
 
 const UploadButton = styled(Button)`

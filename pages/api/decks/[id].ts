@@ -1,4 +1,5 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
+import { decksDeleteHandler } from '@src/api-handlers/decks/id/delete'
 import { deckGetHandler } from '@src/api-handlers/decks/id/get'
 import prisma from '@src/prisma/prismaClient'
 import { DeckWithCards } from '@src/types/deck'
@@ -14,6 +15,8 @@ export default async function handler(
     await deckGetHandler({ req, res, prisma, id: deckId })
   } else if (req.method === 'POST') {
     res.status(200).send('WIP')
+  } else if (req.method === 'DELETE') {
+    await decksDeleteHandler({ req, res, prisma, id: deckId })
   } else {
     res.status(404).send('Invalid request method.')
   }
