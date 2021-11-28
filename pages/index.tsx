@@ -3,7 +3,7 @@ import styled from '@emotion/styled'
 import { DeckList } from '@src/components/decks/DeckList'
 import { Container } from '@src/components/shared/Container'
 import prisma from '@src/prisma/prismaClient'
-import type { GetStaticProps, InferGetStaticPropsType } from 'next'
+import type { GetServerSideProps, InferGetStaticPropsType } from 'next'
 
 export const Wrapper = styled(Container.withComponent('main'))``
 
@@ -18,14 +18,13 @@ const Home = ({ decks }: InferGetStaticPropsType<typeof getStaticProps>) => {
   )
 }
 
-export const getStaticProps: GetStaticProps<{ decks: Deck[] }> = async () => {
+export const getStaticProps: GetServerSideProps<{ decks: Deck[] }> = async () => {
   const decks = await prisma.deck.findMany()
 
   return {
     props: {
       decks
-    },
-    revalidate: 60
+    }
   }
 }
 

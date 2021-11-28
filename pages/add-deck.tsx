@@ -93,7 +93,11 @@ const AddDeck: NextPage = () => {
           placeholder="Type a deck name"
         />
       )}
-      {data && deckName && <UploadButton onClick={uploadDeck}>Upload Deck!</UploadButton>}
+      {data && deckName && (
+        <UploadButton variant="confirm" onClick={uploadDeck}>
+          Upload Deck!
+        </UploadButton>
+      )}
       {data && (
         <ContentPreview>
           {data?.map((row) => (
