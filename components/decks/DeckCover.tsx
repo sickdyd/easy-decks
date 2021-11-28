@@ -11,9 +11,11 @@ const Wrapper = styled.div`
   position: relative;
   border: 1px solid rgba(0, 0, 0, 0.1);
   border-radius: 10px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2) inset;
+  box-shadow: 0 0 14px rgba(0, 0, 0, 1) inset;
   width: 150px;
   height: 150px;
+  background-image: url('/assets/wood-dark.png');
+  background-size: contain;
 
   .reduced {
     width: 40px;
@@ -45,7 +47,7 @@ const Cover = styled.div`
   height: 100%;
   width: 100%;
   padding: 1rem;
-  background-color: var(--white);
+  background-image: url('/assets/wood-clear.png');
   border: 1px solid rgba(0, 0, 0, 0.1);
   transition: all 200ms;
   border-radius: 10px;
