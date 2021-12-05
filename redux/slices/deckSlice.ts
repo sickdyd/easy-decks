@@ -2,30 +2,23 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { RootState } from '@src/redux/store'
 import { DeckWithCards } from '@src/types/deck'
 
-export const MIN_CORRECT_GUESSES = 1
+export const INITIAL_CHANCES = 0
 
 export const getCardIndexByChance = (state: DeckWithCards) => {
-  let newCardIndex = state.lastCardIndex
+  const unviewedCards = state.cards.filter((card) => !card.viewed)
 
-  const uncompletedCards = state.cards.filter(({ chances }) => chances > 0)
+  const maxChancesCardId = unviewedCards.sort(
+    ({ chances: firstCardChances }, { chances: secondCardChances }) =>
+      secondCardChances - firstCardChances
+  )[0].id
 
-  if (uncompletedCards.length === 1) {
-    newCardIndex = state.cards.indexOf(uncompletedCards[0])
-    state.cards[state.cards.indexOf(uncompletedCards[0])].chances = 0
-  } else {
-    while (newCardIndex === state.lastCardIndex && uncompletedCards.length > 0) {
-      const allChances = state.cards.map(({ chances }) => Math.random() * chances)
-      const maxValue = Math.max(...allChances)
+  const maxChancesCardIndex = state.cards.findIndex((card) => card.id === maxChancesCardId)
 
-      newCardIndex = allChances.indexOf(maxValue)
-    }
-  }
-
-  return newCardIndex
+  return maxChancesCardIndex
 }
 
 const deckIsCompleted = (state: DeckWithCards) =>
-  !(state.cards.filter(({ chances }) => chances > 0).length > 0)
+  state.cards.filter(({ viewed }) => !viewed).length === 0
 
 export const deckSlice = createSlice({
   name: 'deck',
@@ -33,26 +26,19 @@ export const deckSlice = createSlice({
   reducers: {
     initializeDeck: (state: DeckWithCards, action: PayloadAction<DeckWithCards>) => {
       state.cards = action.payload.cards
-      state.cards = state.cards.map((card) => ({ ...card, chanches: MIN_CORRECT_GUESSES }))
-      const initialCard = getCardIndexByChance(state)
-      state.cardIndex = initialCard
-      state.lastCardIndex = initialCard
-      state.lastCardIndexes = []
+      state.cards = state.cards.map((card) => ({ ...card, viewed: false }))
+      state.cardIndex = getCardIndexByChance(state)
       state.deckIsCompleted = false
     },
     flipCard: (state: DeckWithCards) => {
       state.cards[state.cardIndex].flipped = true
     },
     guessCard: (state: DeckWithCards, { payload: success }: PayloadAction<boolean>) => {
-      state.cards[state.cardIndex].chances += success ? -1 : 0
+      state.cards[state.cardIndex].chances += success ? -1 : 1
       state.cards[state.cardIndex].flipped = false
+      state.cards[state.cardIndex].viewed = true
       state.deckIsCompleted = deckIsCompleted(state)
-
-      const newCardIndex = getCardIndexByChance(state)
-      state.lastCardIndexes.push(newCardIndex)
-      state.lastCardIndexes.length > state.cards.length && state.lastCardIndexes.shift()
-      state.lastCardIndex = newCardIndex
-      state.cardIndex = newCardIndex
+      state.cardIndex = state.deckIsCompleted ? 0 : getCardIndexByChance(state)
     }
   }
 })

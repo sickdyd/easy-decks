@@ -93,8 +93,8 @@ export function Deck(): JSX.Element {
       {flipped && (
         <>
           <CardContainer>
-            {back.map((element) => (
-              <p>{element}</p>
+            {back.map((element, index) => (
+              <p key={index}>{element}</p>
             ))}
           </CardContainer>
           <IconsWrapper>

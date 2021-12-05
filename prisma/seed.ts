@@ -15,6 +15,7 @@ async function main() {
   const cards = [...new Array(10)].map(() => ({
     front: faker.vehicle.model(),
     back: faker.vehicle.manufacturer(),
+    viewed: false,
     flipped: false,
     chances: 5
   }))

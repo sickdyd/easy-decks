@@ -1,6 +1,7 @@
 import styled from '@emotion/styled'
+import { faBars } from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { NavBarLinks } from '@src/components/navbar/NavBarLinks'
-import { Image } from '@src/components/shared/Image'
 import Link from 'next/link'
 import { useState } from 'react'
 import { Container } from '../shared/Container'
@@ -8,6 +9,7 @@ import { Container } from '../shared/Container'
 const Wrapper = styled(Container)`
   position: sticky;
   top: 0;
+  background-color: var(--star-command-blue);
   color: var(--white);
   z-index: 10;
 `
@@ -39,15 +41,7 @@ export function Navbar() {
         <Link href="/" passHref>
           <LogoName>Easy Decks</LogoName>
         </Link>
-        <Image
-          onClick={() => setVisible(true)}
-          className="boat-deck-icon"
-          src="/assets/boat.png"
-          alt="Boat Deck Icon"
-          layout="responsive"
-          width={512}
-          height={512}
-        />
+        <FontAwesomeIcon icon={faBars} onClick={() => setVisible(true)} />
       </TopSection>
 
       {visible && <NavBarLinks setVisible={setVisible} />}
