@@ -3,7 +3,7 @@ import { faCheckCircle, faTimesCircle } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { Button } from '@src/components/shared/Button'
 import { useAppDispatch, useAppSelector } from '@src/redux/hooks'
-import { flipCard, guessCard, initializeDeck } from '@src/redux/slices/deckSlice'
+import { flipCard, initializeDeck, patchCard } from '@src/redux/slices/deckSlice'
 import { useEffect } from 'react'
 
 const Wrapper = styled.div`
@@ -86,11 +86,11 @@ export function Deck(): JSX.Element {
   }
 
   const handleWrongAnswer = () => {
-    dispatch(guessCard(false))
+    dispatch(patchCard({ success: false, card: deck.cards[cardIndex] }))
   }
 
   const handleCorrectAnswer = () => {
-    dispatch(guessCard(true))
+    dispatch(patchCard({ success: true, card: deck.cards[cardIndex] }))
   }
 
   const handleStartAgain = () => {
@@ -110,23 +110,26 @@ export function Deck(): JSX.Element {
   }
 
   return (
-    <Wrapper>
-      <WrongGuess onClick={handleWrongAnswer}>
-        <FontAwesomeIcon icon={faTimesCircle} />
-      </WrongGuess>
+    <>
+      <Wrapper>
+        <WrongGuess onClick={handleWrongAnswer}>
+          <FontAwesomeIcon icon={faTimesCircle} />
+        </WrongGuess>
 
-      {flipped && (
-        <CardContainer>
-          <FrontText>{front}</FrontText>
-          {back.map((element, index) => (
-            <span key={index}>{element}</span>
-          ))}
-        </CardContainer>
-      )}
+        {flipped && (
+          <CardContainer>
+            <FrontText>{front}</FrontText>
+            {back.map((element, index) => (
+              <span key={index}>{element}</span>
+            ))}
+          </CardContainer>
+        )}
 
-      <RightGuess onClick={handleCorrectAnswer}>
-        <FontAwesomeIcon icon={faCheckCircle} />
-      </RightGuess>
-    </Wrapper>
+        <RightGuess onClick={handleCorrectAnswer}>
+          <FontAwesomeIcon icon={faCheckCircle} />
+        </RightGuess>
+      </Wrapper>
+      <div>{JSON.stringify(deck)}</div>
+    </>
   )
 }

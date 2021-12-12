@@ -9,6 +9,8 @@ axios.interceptors.request.use((config) => {
 
 axios.interceptors.response.use((response) => {
   isDevelopment && console.log('incoming response -> ', response)
+
+  return response
 })
 
 export const fetcher = <T>(url: string): Promise<T> =>

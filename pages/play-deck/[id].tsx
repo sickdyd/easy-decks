@@ -34,7 +34,7 @@ export const getServerSideProps = async (context: GetServerSidePropsContext) => 
 
   return {
     props: {
-      deck
+      deck: { ...deck, deckIsCompleted: false, cardIndex: 0 }
     }
   }
 }
