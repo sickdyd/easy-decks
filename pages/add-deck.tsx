@@ -13,17 +13,17 @@ const Wrapper = styled(Container)`
 `
 
 const ContentPreview = styled.pre`
-  margin-top: 1rem;
+  margin-block-start: 1rem;
   overflow: hidden;
   max-width: 90vw;
 `
 
 const UploadButton = styled(Button)`
-  margin-top: 1rem;
+  margin-block-start: 1rem;
 `
 
 const StyledTextInput = styled(TextInput)`
-  margin-top: 1rem;
+  margin-block-start: 1rem;
 `
 
 const Row = styled.div``

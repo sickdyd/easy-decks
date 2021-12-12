@@ -15,7 +15,7 @@ const BaseButton = styled.button<{ backgroundColor: string }>`
   background-color: ${({ backgroundColor }) => backgroundColor};
 `
 const StyledSpinner = styled(Spinner)`
-  margin-left: 1rem;
+  margin-inline-start: 1rem;
   border: 1px solid blue;
 `
 

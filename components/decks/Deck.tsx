@@ -6,15 +6,10 @@ import { flipCard, guessCard, initializeDeck } from '@src/redux/slices/deckSlice
 import { useEffect } from 'react'
 
 const Wrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  width: 100%;
+  display: grid;
+  grid-template-columns: 1fr 70% 1fr;
+  grid-template-rows: 1fr;
   height: 100%;
-  border-radius: 10px;
-  background-color: rgba(255, 255, 255, 0.8);
-  padding: 2rem;
 
   &:hover {
     cursor: pointer;
@@ -26,21 +21,41 @@ const CardContainer = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  text-align: center;
-  font-size: 18px;
+  font-size: 1rem;
   font-family: 'M PLUS Rounded 1c';
+  text-align: center;
 `
 
-const Front = styled(CardContainer)`
+const Front = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  font-size: 7rem;
+`
+
+const FrontText = styled.div`
   font-size: 5rem;
 `
 
-const IconsWrapper = styled.div`
+const Guess = styled.div`
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
   width: 100%;
-  font-size: 4rem;
-  margin-top: 2rem;
+  writing-mode: vertical-lr;
+  text-orientation: upright;
+  color: white;
+  font-size: 2rem;
+`
+
+const WrongGuess = styled(Guess)`
+  background-color: rgba(150, 0, 0, 0.9);
+`
+
+const RightGuess = styled(Guess)`
+  background-color: rgba(0, 150, 0, 0.9);
 `
 
 export function Deck(): JSX.Element {
@@ -80,29 +95,27 @@ export function Deck(): JSX.Element {
   }
 
   if (!flipped) {
-    return (
-      <Wrapper onClick={handleFlipCard}>
-        <Front>{front}</Front>
-      </Wrapper>
-    )
+    return <Front onClick={handleFlipCard}>{front}</Front>
   }
 
   return (
     <Wrapper>
-      <Front onClick={handleFlipCard}>{front}</Front>
+      <WrongGuess onClick={handleWrongAnswer}>
+        <FontAwesomeIcon icon={faTimesCircle} />
+      </WrongGuess>
+
       {flipped && (
-        <>
-          <CardContainer>
-            {back.map((element, index) => (
-              <p key={index}>{element}</p>
-            ))}
-          </CardContainer>
-          <IconsWrapper>
-            <FontAwesomeIcon icon={faTimesCircle} color="red" onClick={handleWrongAnswer} />
-            <FontAwesomeIcon icon={faCheckCircle} color="green" onClick={handleCorrectAnswer} />
-          </IconsWrapper>
-        </>
+        <CardContainer>
+          <FrontText>{front}</FrontText>
+          {back.map((element, index) => (
+            <span key={index}>{element}</span>
+          ))}
+        </CardContainer>
       )}
+
+      <RightGuess onClick={handleCorrectAnswer}>
+        <FontAwesomeIcon icon={faCheckCircle} />
+      </RightGuess>
     </Wrapper>
   )
 }

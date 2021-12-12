@@ -25,7 +25,7 @@ const StyledFileInput = styled.input`
 
 const ButtonLabel = styled.span`
   * {
-    margin-left: 0.5rem;
+    margin-inline-start: 0.5rem;
   }
 `
 

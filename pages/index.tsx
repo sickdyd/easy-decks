@@ -8,8 +8,6 @@ import type { GetServerSideProps, InferGetStaticPropsType } from 'next'
 export const Wrapper = styled(Container.withComponent('main'))``
 
 const Home = ({ decks }: InferGetStaticPropsType<typeof getStaticProps>) => {
-  console.log(decks)
-
   return (
     <Wrapper>
       <DeckList decks={decks} />
@@ -19,8 +17,6 @@ const Home = ({ decks }: InferGetStaticPropsType<typeof getStaticProps>) => {
 
 export const getStaticProps: GetServerSideProps<{ decks: Deck[] }> = async () => {
   const decks = await prisma.deck.findMany()
-
-  console.log(decks)
 
   return {
     props: {

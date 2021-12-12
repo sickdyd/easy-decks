@@ -1,13 +1,14 @@
 import styled from '@emotion/styled'
 import { Deck } from '@src/components/decks/Deck'
-import { Container } from '@src/components/shared/Container'
 import prisma from '@src/prisma/prismaClient'
 import { useAppDispatch } from '@src/redux/hooks'
 import { initializeDeck } from '@src/redux/slices/deckSlice'
 import InferNextPropsType from 'infer-next-props-type'
 import { GetServerSidePropsContext } from 'next'
 
-const Wrapper = styled(Container.withComponent('main'))``
+const Wrapper = styled.main`
+  height: 100%;
+`
 
 const PlayDeck = ({ deck }: InferNextPropsType<typeof getServerSideProps>) => {
   const dispatch = useAppDispatch()
