@@ -1,21 +1,9 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
+import { getLesserKnownCard } from '@src/cards-logic/getLesserKnownCard'
 import { RootState } from '@src/redux/store'
 import { DeckWithCards } from '@src/types/deck'
 
 export const INITIAL_CHANCES = 0
-
-export const getCardIndexByChance = (state: DeckWithCards) => {
-  const unviewedCards = state.cards.filter((card) => !card.viewed)
-
-  const maxChancesCardId = unviewedCards.sort(
-    ({ chances: firstCardChances }, { chances: secondCardChances }) =>
-      secondCardChances - firstCardChances
-  )[0].id
-
-  const maxChancesCardIndex = state.cards.findIndex((card) => card.id === maxChancesCardId)
-
-  return maxChancesCardIndex
-}
 
 const deckIsCompleted = (state: DeckWithCards) =>
   state.cards.filter(({ viewed }) => !viewed).length === 0
@@ -27,18 +15,18 @@ export const deckSlice = createSlice({
     initializeDeck: (state: DeckWithCards, action: PayloadAction<DeckWithCards>) => {
       state.cards = action.payload.cards
       state.cards = state.cards.map((card) => ({ ...card, viewed: false }))
-      state.cardIndex = getCardIndexByChance(state)
+      state.cardIndex = getLesserKnownCard(state)
       state.deckIsCompleted = false
     },
     flipCard: (state: DeckWithCards) => {
       state.cards[state.cardIndex].flipped = true
     },
     guessCard: (state: DeckWithCards, { payload: success }: PayloadAction<boolean>) => {
-      state.cards[state.cardIndex].chances += success ? -1 : 1
+      state.cards[state.cardIndex].guesses += success ? -1 : 1
       state.cards[state.cardIndex].flipped = false
       state.cards[state.cardIndex].viewed = true
       state.deckIsCompleted = deckIsCompleted(state)
-      state.cardIndex = state.deckIsCompleted ? 0 : getCardIndexByChance(state)
+      state.cardIndex = state.deckIsCompleted ? 0 : getLesserKnownCard(state)
     }
   }
 })

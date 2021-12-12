@@ -1,6 +1,7 @@
 import styled from '@emotion/styled'
 import { faCheckCircle, faTimesCircle } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { Button } from '@src/components/shared/Button'
 import { useAppDispatch, useAppSelector } from '@src/redux/hooks'
 import { flipCard, guessCard, initializeDeck } from '@src/redux/slices/deckSlice'
 import { useEffect } from 'react'
@@ -58,6 +59,16 @@ const RightGuess = styled(Guess)`
   background-color: rgba(0, 150, 0, 0.9);
 `
 
+const DeckCompleted = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+  height: 100%;
+  font-size: 2rem;
+`
+
 export function Deck(): JSX.Element {
   const dispatch = useAppDispatch()
   const deck = useAppSelector((state) => state.deck)
@@ -88,9 +99,9 @@ export function Deck(): JSX.Element {
 
   if (deckIsCompleted) {
     return (
-      <Wrapper>
-        You completed the deck! <button onClick={handleStartAgain}>Start again!</button>
-      </Wrapper>
+      <DeckCompleted>
+        You completed the deck! <Button onClick={handleStartAgain}>Start again</Button>
+      </DeckCompleted>
     )
   }
 

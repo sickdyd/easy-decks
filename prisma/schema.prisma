@@ -15,11 +15,7 @@ datasource db {
 model Deck {
   id Int @id @default(autoincrement())
   name String
-  cardIndex Int
-  lastCardIndex Int
   cards Card[]
-  deckIsCompleted Boolean
-  lastCardIndexes Int[]
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
@@ -28,9 +24,8 @@ model Card {
   id Int @id @default(autoincrement())
   front String[]
   back String[]
-  flipped Boolean
-  chances Int
-  viewed Boolean @default(false)
+  guesses Int
+  lastCorrectGuess DateTime
   deck Deck @relation(fields: [deckId], references: [id], onDelete: Cascade)
   deckId Int
 }

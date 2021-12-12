@@ -12,14 +12,15 @@ const Wrapper = styled.div`
   justify-content: space-around;
   align-items: space-around;
   padding: 2rem;
-  width: calc((100% - 2rem) / 2);
+  width: calc((100% - 1rem) / 2);
   box-size: auto;
   aspect-ratio: 1;
   border: 1px solid rgba(0, 0, 0, 0.2);
   border-radius: 10px;
+  gap: 1rem;
 
   @media (orientation: landscape) {
-    width: calc((100% - 4rem) / 4);
+    width: calc((100% - 3rem) / 4);
   }
 `
 

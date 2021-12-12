@@ -1,9 +1,7 @@
 import styled from '@emotion/styled'
-import { faBars } from '@fortawesome/free-solid-svg-icons'
+import { faPlusCircle } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { NavBarLinks } from '@src/components/navbar/NavBarLinks'
 import Link from 'next/link'
-import { useState } from 'react'
 import { Container } from '../shared/Container'
 
 const Wrapper = styled(Container)`
@@ -29,22 +27,20 @@ const TopSection = styled.nav`
 
 const LogoName = styled.a`
   font-weight: 700;
-  font-size: 1.25rem;
+  font-size: 1.5rem;
 `
 
 export function Navbar() {
-  const [visible, setVisible] = useState(false)
-
   return (
     <Wrapper>
       <TopSection>
         <Link href="/" passHref>
           <LogoName>Easy Decks</LogoName>
         </Link>
-        <FontAwesomeIcon icon={faBars} onClick={() => setVisible(true)} />
+        <Link href="/add-deck" passHref>
+          <FontAwesomeIcon icon={faPlusCircle} size="2x" />
+        </Link>
       </TopSection>
-
-      {visible && <NavBarLinks setVisible={setVisible} />}
     </Wrapper>
   )
 }

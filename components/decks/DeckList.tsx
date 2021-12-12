@@ -6,6 +6,7 @@ const Wrapper = styled.div`
   display: flex;
   flex-wrap: wrap;
   gap: 1rem;
+  width: 100%;
 `
 
 export function DeckList({ decks }: { decks: Deck[] }) {

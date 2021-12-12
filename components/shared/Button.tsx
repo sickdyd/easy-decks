@@ -13,6 +13,8 @@ const BaseButton = styled.button<{ backgroundColor: string }>`
   white-space: nowrap;
   color: white;
   background-color: ${({ backgroundColor }) => backgroundColor};
+  font-size: 1rem;
+  text-transform: uppercase;
 `
 const StyledSpinner = styled(Spinner)`
   margin-inline-start: 1rem;

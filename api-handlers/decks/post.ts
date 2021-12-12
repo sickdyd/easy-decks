@@ -6,10 +6,6 @@ export async function decksPostHandler({ req, res, prisma }: RequestHandler) {
   const deck = await prisma.deck.create({
     data: {
       name,
-      cardIndex: 0,
-      lastCardIndex: 0,
-      deckIsCompleted: false,
-      lastCardIndexes: [],
       cards: { create: cards }
     }
   })

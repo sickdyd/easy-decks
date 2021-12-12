@@ -15,18 +15,13 @@ async function main() {
   const cards = [...new Array(10)].map(() => ({
     front: faker.vehicle.model(),
     back: faker.vehicle.manufacturer(),
-    viewed: false,
-    flipped: false,
-    chances: 5
+    guesses: 0,
+    lastCorrectGuess: new Date()
   }))
 
   await prisma.deck.create({
     data: {
       name: faker.name.title(),
-      cardIndex: 0,
-      lastCardIndex: 0,
-      lastCardIndexes: [],
-      deckIsCompleted: false,
       cards: {
         create: cards
       }

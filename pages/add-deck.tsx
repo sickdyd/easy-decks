@@ -44,9 +44,8 @@ const buildCards = ({ data }: { data: string[] }) => {
     return {
       front: [columns[0]],
       back: buildCardBack({ headers, columns }),
-      viewed: false,
-      flipped: false,
-      chances: 0
+      guesses: 0,
+      lastCorrectGuess: new Date()
     }
   })
 
